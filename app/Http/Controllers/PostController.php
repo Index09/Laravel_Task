@@ -37,26 +37,29 @@ class PostController extends Controller
 
 
     }
-    public function accept($id)
+    public function ActionToPost($id , request $request)
     {
+        $action = $request->query('action');
         $post = Post::findOrFail($id);
-        $post->is_published = 1;
-        $post->save();
+        if( $action == 'accept'){
+ 
+            $post->is_published = 1;
+            $post->save();
+            return response()->json([
+                'message' => 'Post accepted',
+            ], 200);
 
-        return response()->json([
-            'message' => 'Post accepted',
-        ], 200);
+        }else {
+
+            $post->delete();
+            return response()->json([
+                'message' => 'Post refused',
+            ], 200);
+        }
+
     }
 
-    public function refuse($id)
-    {
-        $post = Post::findOrFail($id);
-        $post->delete();
 
-        return response()->json([
-            'message' => 'Post refused',
-        ], 200);
-    }
     public function getUserPosts(Request $request)
     {
         $filter = $request->query('filter');

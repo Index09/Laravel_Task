@@ -29,8 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware(['hasAdminAccess'])->group( function(){
 
         Route::get('/posts/unpublished', [PostController::class, 'ShowUnpublishedPosts']);
-        Route::post('/posts/{id}/accept', [PostController::class, 'accept'])->name('posts.accept');
-        Route::post('/posts/{id}/refuse', [PostController::class, 'refuse'])->name('posts.refuse');
+        Route::post('/posts/{id}/ActionToPost', [PostController::class, 'ActionToPost'])->name('posts.ActionToPost');
         
     });
 
