@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('title');
             $table->mediumText('content');
             $table->boolean('is_published')->default(0);
+
+        
         });
     }
 

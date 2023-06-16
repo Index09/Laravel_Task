@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\DeviceUserTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable , HasApiTokens; 
+    use HasApiTokens, HasFactory, Notifiable , HasApiTokens  , DeviceUserTrait;
+
+
+    public function Devices()
+    {
+        return $this->hasMany(device::class);
+    }
 
     /**
      * The attributes that are mass assignable.
