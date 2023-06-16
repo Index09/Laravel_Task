@@ -32,9 +32,10 @@ class AuthController extends Controller
 {
     $credentials = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials)) {
-   
 
+
+
+    if ($this->NormalLogin($credentials)) {
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -44,9 +45,25 @@ class AuthController extends Controller
         ], 200);
     }
 
-
+    // Authentication failed
     return response()->json([
         'message' => 'Invalid credentials',
     ], 401);
-}
+
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ], 401);
+    }
+    private function NormalLogin(array $credentials): bool
+    
+    {
+
+        $user = User::where('email', $credentials['email'])->first();
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            Auth::login($user);
+            return true;
+        }
+
+        return false;
+    }
 }
