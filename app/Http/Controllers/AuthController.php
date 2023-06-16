@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Rules\Has18Years;
-
+use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function register(Request $request)
@@ -23,7 +23,7 @@ class AuthController extends Controller
             'birthdate' => $request->birthdate,
         ]);
 
-        // Optionally, you can generate a token for the newly registered user using Sanctum
+        
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -31,4 +31,26 @@ class AuthController extends Controller
             'token' => $token,
         ], 201);
     }
+
+    public function login(Request $request)
+{
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+   
+
+        $user = Auth::user();
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+        ], 200);
+    }
+
+
+    return response()->json([
+        'message' => 'Invalid credentials',
+    ], 401);
+}
 }
