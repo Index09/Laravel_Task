@@ -27,11 +27,10 @@ class PostController extends Controller
         return response()->json($post,$code  );
     }
 
-    public function show($id)
+
+    public function ShowUnpublishedPosts()
     {
-  
-        $post = Post::findOrFail($id);
-        $code = 200;
-        return response()->json($post , $code );
+        
+
     }
 }

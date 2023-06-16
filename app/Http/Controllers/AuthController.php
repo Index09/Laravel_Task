@@ -5,17 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Rules\Has18Years;
+use App\Http\Requests\RegisterUserRequest;
+
 use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterUserRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
-            'birthdate' => ['required', 'date', new Has18Years],
-        ]);
 
         $user = User::create([
             'email' => $request->email,

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->mediumText('content');
-            $table->boolean('public')->default(0);
+            $table->boolean('is_published')->default(0);
         });
     }
 
