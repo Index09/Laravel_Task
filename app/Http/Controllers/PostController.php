@@ -37,4 +37,24 @@ class PostController extends Controller
 
 
     }
+    public function accept($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->is_published = 1;
+        $post->save();
+
+        return response()->json([
+            'message' => 'Post accepted',
+        ], 200);
+    }
+
+    public function refuse($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return response()->json([
+            'message' => 'Post refused',
+        ], 200);
+    }
 }
