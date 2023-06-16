@@ -31,6 +31,10 @@ class PostController extends Controller
     public function ShowUnpublishedPosts()
     {
 
+        $unpublishedPosts = post::where('is_published','=' , false)->get();
+
+        return response()->json($unpublishedPosts);
+
 
     }
 }

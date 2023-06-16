@@ -16,7 +16,9 @@ class HasAdminAccess
      */
     public function handle(Request $request, Closure $next)
     {   
-        if(Auth::user()->is_admin){
+
+        if(Auth::user()->is_admin ?? false){
+
             return $next($request);
         }else {
             abort(403);
