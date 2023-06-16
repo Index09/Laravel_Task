@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     public function store(Request $request)
@@ -56,5 +56,20 @@ class PostController extends Controller
         return response()->json([
             'message' => 'Post refused',
         ], 200);
+    }
+    public function getUserPosts(Request $request)
+    {
+        $filter = $request->query('filter');
+
+        if ($filter === 'me') {
+            $user = Auth::user();
+            $userPosts = Post::where('user_id', $user->id)->get();
+
+            return response()->json($userPosts);
+        }
+
+        $posts = Post::all();
+
+        return response()->json($posts);
     }
 }

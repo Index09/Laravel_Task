@@ -18,10 +18,14 @@ use App\Http\Controllers\PostController;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/posts/show', [PostController::class, 'getUserPosts']);
+
 
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+
     Route::middleware(['hasAdminAccess'])->group( function(){
 
         Route::get('/posts/unpublished', [PostController::class, 'ShowUnpublishedPosts']);
